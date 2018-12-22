@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amaq.wechatserver.mapper.InsuranceMapper" >
+  <resultMap id="BaseResultMap" type="com.amaq.wechatserver.model.Insurance" >
+    <id column="key_id" property="keyId" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="main_photo" property="mainPhoto" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="institution_rebates" property="institutionRebates" jdbcType="INTEGER" />
+    <result column="doctor_rebates" property="doctorRebates" jdbcType="INTEGER" />
+    <result column="user_rebates" property="userRebates" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="is_valid" property="isValid" jdbcType="BIT" />
+    <result column="is_sale" property="isSale" jdbcType="BIT" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amaq.wechatserver.model.InsuranceWithBLOBs" extends="BaseResultMap" >
+    <result column="insurance_detail" property="insuranceDetail" jdbcType="LONGVARCHAR" />
+    <result column="insurance_fee" property="insuranceFee" jdbcType="LONGVARCHAR" />
+    <result column="insurance_feature" property="insuranceFeature" jdbcType="LONGVARCHAR" />
+    <result column="claims_process" property="claimsProcess" jdbcType="LONGVARCHAR" />
+    <result column="notice" property="notice" jdbcType="LONGVARCHAR" />
+    <result column="service_agreement" property="serviceAgreement" jdbcType="LONGVARCHAR" />
+    <result column="insurance_terms" property="insuranceTerms" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    key_id, title, main_photo, pay_type, institution_rebates, doctor_rebates, user_rebates, 
+    update_time, create_time, is_valid, is_sale, is_delete
+  </sql>
+  <sql id="Blob_Column_List" >
+    insurance_detail, insurance_fee, insurance_feature, claims_process, notice, service_agreement, 
+    insurance_terms
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_insuranceinfo
+    where key_id = #{keyId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_insuranceinfo
+    where is_delete = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_insuranceinfo
+    where key_id = #{keyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.amaq.wechatserver.model.InsuranceWithBLOBs" >
+    insert into t_insuranceinfo (key_id, title, main_photo, 
+      pay_type, institution_rebates, doctor_rebates, 
+      user_rebates, update_time, create_time, 
+      is_valid, is_sale, is_delete, insurance_detail, 
+      insurance_fee, insurance_feature, 
+      claims_process, notice, service_agreement, 
+      insurance_terms)
+    values (#{keyId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{mainPhoto,jdbcType=VARCHAR}, 
+      #{payType,jdbcType=VARCHAR}, #{institutionRebates,jdbcType=INTEGER}, #{doctorRebates,jdbcType=INTEGER}, 
+      #{userRebates,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{isValid,jdbcType=BIT}, #{isSale,jdbcType=BIT}, #{isDelete,jdbcType=BIT}, #{insuranceDetail,jdbcType=LONGVARCHAR}, 
+      #{insuranceFee,jdbcType=LONGVARCHAR}, #{insuranceFeature,jdbcType=LONGVARCHAR}, 
+      #{claimsProcess,jdbcType=LONGVARCHAR}, #{notice,jdbcType=LONGVARCHAR}, #{serviceAgreement,jdbcType=LONGVARCHAR}, 
+      #{insuranceTerms,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amaq.wechatserver.model.InsuranceWithBLOBs" >
+    insert into t_insuranceinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="keyId != null" >
+        key_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="mainPhoto != null" >
+        main_photo,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="institutionRebates != null" >
+        institution_rebates,
+      </if>
+      <if test="doctorRebates != null" >
+        doctor_rebates,
+      </if>
+      <if test="userRebates != null" >
+        user_rebates,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isValid != null" >
+        is_valid,
+      </if>
+      <if test="isSale != null" >
+        is_sale,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="insuranceDetail != null" >
+        insurance_detail,
+      </if>
+      <if test="insuranceFee != null" >
+        insurance_fee,
+      </if>
+      <if test="insuranceFeature != null" >
+        insurance_feature,
+      </if>
+      <if test="claimsProcess != null" >
+        claims_process,
+      </if>
+      <if test="notice != null" >
+        notice,
+      </if>
+      <if test="serviceAgreement != null" >
+        service_agreement,
+      </if>
+      <if test="insuranceTerms != null" >
+        insurance_terms,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="keyId != null" >
+        #{keyId,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="mainPhoto != null" >
+        #{mainPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="institutionRebates != null" >
+        #{institutionRebates,jdbcType=INTEGER},
+      </if>
+      <if test="doctorRebates != null" >
+        #{doctorRebates,jdbcType=INTEGER},
+      </if>
+      <if test="userRebates != null" >
+        #{userRebates,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValid != null" >
+        #{isValid,jdbcType=BIT},
+      </if>
+      <if test="isSale != null" >
+        #{isSale,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="insuranceDetail != null" >
+        #{insuranceDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insuranceFee != null" >
+        #{insuranceFee,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insuranceFeature != null" >
+        #{insuranceFeature,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="claimsProcess != null" >
+        #{claimsProcess,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="notice != null" >
+        #{notice,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="serviceAgreement != null" >
+        #{serviceAgreement,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insuranceTerms != null" >
+        #{insuranceTerms,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amaq.wechatserver.model.InsuranceWithBLOBs" >
+    update t_insuranceinfo
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="mainPhoto != null" >
+        main_photo = #{mainPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="institutionRebates != null" >
+        institution_rebates = #{institutionRebates,jdbcType=INTEGER},
+      </if>
+      <if test="doctorRebates != null" >
+        doctor_rebates = #{doctorRebates,jdbcType=INTEGER},
+      </if>
+      <if test="userRebates != null" >
+        user_rebates = #{userRebates,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValid != null" >
+        is_valid = #{isValid,jdbcType=BIT},
+      </if>
+      <if test="isSale != null" >
+        is_sale = #{isSale,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="insuranceDetail != null" >
+        insurance_detail = #{insuranceDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insuranceFee != null" >
+        insurance_fee = #{insuranceFee,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insuranceFeature != null" >
+        insurance_feature = #{insuranceFeature,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="claimsProcess != null" >
+        claims_process = #{claimsProcess,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="notice != null" >
+        notice = #{notice,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="serviceAgreement != null" >
+        service_agreement = #{serviceAgreement,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insuranceTerms != null" >
+        insurance_terms = #{insuranceTerms,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where key_id = #{keyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amaq.wechatserver.model.InsuranceWithBLOBs" >
+    update t_insuranceinfo
+    set title = #{title,jdbcType=VARCHAR},
+      main_photo = #{mainPhoto,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=VARCHAR},
+      institution_rebates = #{institutionRebates,jdbcType=INTEGER},
+      doctor_rebates = #{doctorRebates,jdbcType=INTEGER},
+      user_rebates = #{userRebates,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_valid = #{isValid,jdbcType=BIT},
+      is_sale = #{isSale,jdbcType=BIT},
+      is_delete = #{isDelete,jdbcType=BIT},
+      insurance_detail = #{insuranceDetail,jdbcType=LONGVARCHAR},
+      insurance_fee = #{insuranceFee,jdbcType=LONGVARCHAR},
+      insurance_feature = #{insuranceFeature,jdbcType=LONGVARCHAR},
+      claims_process = #{claimsProcess,jdbcType=LONGVARCHAR},
+      notice = #{notice,jdbcType=LONGVARCHAR},
+      service_agreement = #{serviceAgreement,jdbcType=LONGVARCHAR},
+      insurance_terms = #{insuranceTerms,jdbcType=LONGVARCHAR}
+    where key_id = #{keyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amaq.wechatserver.model.Insurance" >
+    update t_insuranceinfo
+    set title = #{title,jdbcType=VARCHAR},
+      main_photo = #{mainPhoto,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=VARCHAR},
+      institution_rebates = #{institutionRebates,jdbcType=INTEGER},
+      doctor_rebates = #{doctorRebates,jdbcType=INTEGER},
+      user_rebates = #{userRebates,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_valid = #{isValid,jdbcType=BIT},
+      is_sale = #{isSale,jdbcType=BIT},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where key_id = #{keyId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amaq.wechatserver.mapper.PolicyHolderMapper" >
+  <resultMap id="BaseResultMap" type="com.amaq.wechatserver.model.PolicyHolder" >
+    <id column="key_id" property="keyId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="social_insurance" property="socialInsurance" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="is_mainuser" property="isMainuser" jdbcType="BIT" />
+    <result column="is_valid" property="isValid" jdbcType="BIT" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    key_id, user_id, id_number, phone_number, social_insurance, create_time, is_mainuser, 
+    is_valid, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_policyholder
+    where key_id = #{keyId,jdbcType=BIGINT}
+  </select>
+  <select id="GetListByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_policyholder
+    where user_id = #{keyId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_policyholder
+    where key_id = #{keyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.amaq.wechatserver.model.PolicyHolder" >
+    insert into t_policyholder (key_id, user_id, id_number, 
+      phone_number, social_insurance, create_time, 
+      is_mainuser, is_valid, is_delete)
+    values (#{keyId,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}, 
+      #{phoneNumber,jdbcType=VARCHAR}, #{socialInsurance,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{isMainuser,jdbcType=BIT}, #{isValid,jdbcType=BIT}, #{isDelete,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amaq.wechatserver.model.PolicyHolder" >
+    insert into t_policyholder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="keyId != null" >
+        key_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="idNumber != null" >
+        id_number,
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number,
+      </if>
+      <if test="socialInsurance != null" >
+        social_insurance,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isMainuser != null" >
+        is_mainuser,
+      </if>
+      <if test="isValid != null" >
+        is_valid,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="keyId != null" >
+        #{keyId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="socialInsurance != null" >
+        #{socialInsurance,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isMainuser != null" >
+        #{isMainuser,jdbcType=BIT},
+      </if>
+      <if test="isValid != null" >
+        #{isValid,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amaq.wechatserver.model.PolicyHolder" >
+    update t_policyholder
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null" >
+        id_number = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="socialInsurance != null" >
+        social_insurance = #{socialInsurance,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isMainuser != null" >
+        is_mainuser = #{isMainuser,jdbcType=BIT},
+      </if>
+      <if test="isValid != null" >
+        is_valid = #{isValid,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where key_id = #{keyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amaq.wechatserver.model.PolicyHolder" >
+    update t_policyholder
+    set user_id = #{userId,jdbcType=VARCHAR},
+      id_number = #{idNumber,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      social_insurance = #{socialInsurance,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_mainuser = #{isMainuser,jdbcType=BIT},
+      is_valid = #{isValid,jdbcType=BIT},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where key_id = #{keyId,jdbcType=BIGINT}
+  </update>
+</mapper>
