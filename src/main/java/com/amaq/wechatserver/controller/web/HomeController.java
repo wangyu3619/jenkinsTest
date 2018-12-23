@@ -16,6 +16,6 @@ public class HomeController {
     @RequestMapping("home")
     public String hello() {
         logger.info("进来了页面的");
-        return "hello!";
+        return "hello2!";
     }
 }
